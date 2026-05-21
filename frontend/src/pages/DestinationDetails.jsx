@@ -111,7 +111,11 @@ export default function DestinationDetails() {
               </button>
 
               <button
-                onClick={() => navigate("/plan-trip")}
+               onClick={() =>
+              navigate("/trip-planner", {
+               state: { destinationName: destination.name },
+              })
+           }
                 className="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-lg font-semibold transition"
               >
                 Plan this Trip
