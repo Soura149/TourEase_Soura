@@ -1,5 +1,6 @@
 import Loader from './components/common/Loader';
 import React from "react";
+import PropTypes from 'prop-types';
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,6 +11,7 @@ import {
 
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { ToastProvider } from "./context/ToastContext";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import Home2 from "./pages/Home2";
@@ -21,6 +23,8 @@ import Signup from "./pages/signup";
 import Login from "./pages/Login";
 import AddFavorite from "./pages/AddFavorite";
 import ScrollToTopButton from "./components/common/ScrollToTop";
+import LanguageSelector from "./components/LanguageSelector";
+import ChatbotLauncher from "./components/chatbot/ChatbotLauncher";
 import DestinationDetails from "./pages/DestinationDetails";
 import PlanTrip from "./pages/PlanTrip";
 import OAuthSuccess from "./pages/OAuthSuccess";
@@ -29,9 +33,10 @@ import Terms from "./pages/Terms";
 import HelpCenter from "./pages/HelpCenter";
 import NotFound from "./components/NotFound";
 import TripPlanner from './pages/TripPlanner';
+import SmartTripPlanner from './pages/SmartTripPlanner';
 import Footer from "./components/Footer";
 import WatchDemoPage from './pages/DemoSection';
-import MyTrips from './pages/MyTrips';
+import ScrollToTopOnNavigate from "./components/common/ScrollToTopOnNavigate";
 import DynamicPlannerPage from './pages/DynamicPlannerPage';
 
 function ProtectedRoute({ children }) {
@@ -44,6 +49,10 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 function AppRoutes() {
   const location = useLocation();
   const hideNavigationPaths = ["/signup", "/login"];
@@ -51,8 +60,11 @@ function AppRoutes() {
 
   return (
     <>
+      <ScrollToTopOnNavigate /> 
       {showNavigation && <Navigation />}
       <ScrollToTopButton />
+      <LanguageSelector />
+      <ChatbotLauncher />
       <div className={showNavigation ? "pt-16" : ""}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -78,33 +90,11 @@ function AppRoutes() {
           <Route path="/destinations/:id" element={<DestinationDetails />} />
 
           <Route path="/plan-trip" element={<PlanTrip />} />
+          <Route path="/dynamic-planner" element={<DynamicPlannerPage />} />
           <Route path="/oauth-success" element={<OAuthSuccess />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/trip-planner" element={<TripPlanner />} />
-          <Route
-            path="/my-trips"
-            element={
-              <ProtectedRoute>
-                <MyTrips />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/itinerary/:id"
-            element={
-              <ProtectedRoute>
-                <DynamicPlannerPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dynamic-planner"
-            element={
-              <ProtectedRoute>
-                <DynamicPlannerPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/smart-trip-planner" element={<SmartTripPlanner />} />
         </Routes>
       </div>
       {showNavigation && <Footer />}
@@ -129,11 +119,13 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <FavoritesProvider>
-        <Router>
-          <AppRoutes />
-        </Router>
-      </FavoritesProvider>
+      <ToastProvider>
+        <FavoritesProvider>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </FavoritesProvider>
+      </ToastProvider>
     </ThemeProvider>
   );
 }
