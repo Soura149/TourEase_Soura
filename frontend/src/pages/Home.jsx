@@ -18,13 +18,14 @@ import {
   Sparkles,
 } from "lucide-react";
 import CountUp from "../components/CountUp";
-
+import ThreeBackground from "../components/ThreeBackground";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950">
       {/* ================= HERO SECTION ================= */}
-      <div className="relative min-h-screen w-full bg-white dark:bg-[#030712] overflow-hidden flex items-center py-12 lg:py-0 font-sans">
+      <div className="relative min-h-screen w-full bg-gradient-to-b from-teal-100/60 via-cyan-50/30 to-transparent dark:from-transparent dark:via-transparent dark:to-transparent overflow-hidden flex items-center py-12 lg:py-0 font-sans">
+        <ThreeBackground />
         {/* Background Glows */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-500/10 blur-[100px] rounded-full"></div>
@@ -60,9 +61,8 @@ export default function Home() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                {/* CHANGED: Direct link to Trip Planner */}
                 <Link
-                  to="/trip-planner"
+                  to="/login"
                   className="px-8 py-3.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl font-bold transition-all duration-300 shadow-lg shadow-orange-900/20 active:scale-95 text-md flex items-center justify-center min-w-[180px]"
                 >
                   Start Your Journey
@@ -101,23 +101,7 @@ export default function Home() {
             <div className="relative w-full flex justify-center lg:justify-end">
               <div className="relative z-20 animate-float-slow max-w-[420px] lg:max-w-[480px] w-full">
                 <div className="rounded-[2.5rem] p-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-sm shadow-2xl overflow-hidden">
-                  <div className="rounded-[2rem] overflow-hidden relative group">
-                    <img
-                      src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop"
-                      alt="Luxury Tourism"
-                      className="w-full h-[300px] md:h-[380px] lg:h-[480px] object-cover transition-transform duration-[3s] group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-
-                    <div className="absolute bottom-6 left-6 bg-white/70 dark:bg-white/10 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/40 dark:border-white/20 shadow-xl">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="text-teal-500 w-3 h-3" />
-                        <p className="text-gray-900 dark:text-white text-[10px] font-bold uppercase tracking-wider">
-                          Top Rated Experience
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <ImageCarousel />
                 </div>
               </div>
             </div>
@@ -318,9 +302,8 @@ export default function Home() {
               <p className="text-lg mb-6 opacity-90">
                 Start your journey with the smartest travel assistant
               </p>
-              {/* CHANGED: Direct link to Trip Planner */}
               <Link
-                to="/trip-planner"
+                to="/login"
                 className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-lg font-semibold transition text-lg inline-block"
               >
                 Get Started Free
@@ -349,9 +332,8 @@ export default function Home() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {/* CHANGED: Direct link to Trip Planner */}
             <Link
-              to="/trip-planner"
+              to="/login"
               className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-lg font-semibold transition text-lg"
             >
               Get Started Free
@@ -452,6 +434,58 @@ function CommunityCard({ name, location, quote, trips }) {
   );
 }
 
+const carouselImages = [
+  "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop",
+  "/images/tropical_beach_travel_1778697569059.png",
+  "/images/mountain_lake_travel_1778698082955.png",
+  "/images/city_skyline_travel_1778698104519.png",
+  "/images/ancient_temple_travel_1778698184523.png",
+  "/images/european_street_travel_1778698461926.png"
+];
+
+function ImageCarousel() {
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div 
+      className="rounded-[2rem] overflow-hidden relative group w-full h-[300px] md:h-[380px] lg:h-[480px] transition-all duration-500 hover:shadow-2xl hover:shadow-teal-500/20"
+    >
+      {carouselImages.map((src, index) => (
+        <img
+          key={src}
+          src={src}
+          alt={`Travel destination ${index + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${
+            index === currentIndex 
+              ? "opacity-100 scale-100" 
+              : "opacity-0 scale-100"
+          }`}
+        />
+      ))}
+      
+      {/* Gradient & Highlight Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 z-10 pointer-events-none"></div>
+
+      <div className="absolute bottom-6 left-6 bg-white/70 dark:bg-white/10 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/40 dark:border-white/20 shadow-xl z-20 pointer-events-none transition-transform duration-500 group-hover:-translate-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-teal-500">✦</span>
+          <p className="text-gray-900 dark:text-white text-[10px] font-bold uppercase tracking-wider">
+            Top Rated Experience
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 FeatureCard.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
@@ -473,3 +507,4 @@ CommunityCard.propTypes = {
   quote: PropTypes.string.isRequired,
   trips: PropTypes.string.isRequired,
 };
+

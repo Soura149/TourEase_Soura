@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchReviews } from "../../../services/reviewService";
 // 1. We import the fake data here so we can read the baseline numbers!
 import { destinations } from "../../../utils/destinationsData";
@@ -48,7 +48,7 @@ const ReviewPanel = ({ destinationId, onStatsUpdate }) => {
 
   const [selectedRating, setSelectedRating] = useState(null);
 
-  const loadReviews = async () => {
+  const loadReviews = useCallback(async () => {
     try {
       const data = await fetchReviews(destinationId);
 
@@ -112,12 +112,12 @@ const ReviewPanel = ({ destinationId, onStatsUpdate }) => {
     } catch (error) {
       console.error("Error loading reviews:", error);
     }
-  };
+  }, [destinationId, onStatsUpdate]);
 
   useEffect(() => {
     loadReviews();
     setSelectedRating(null);
-  }, [destinationId]);
+  }, [loadReviews]);
 
   const filteredReviews = selectedRating
     ? reviews.filter(

@@ -125,7 +125,7 @@ function RatingBar({ star, count, total }) {
 }
 
 /* ─── ReviewCard ───────────────────────────────────────── */
-function ReviewCard({ review, destId, helpfulMap, onHelpful }) {
+function ReviewCard({ review, helpfulMap, onHelpful }) {
   const voted = helpfulMap[review.id];
   return (
     <div className="bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-xl p-5 transition-all hover:shadow-md hover:border-teal-400/40">

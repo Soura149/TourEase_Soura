@@ -1,6 +1,6 @@
-import Review from "../models/Review.js";
+const Review = require("../models/Review");
 
-export const getReviewsByDestination = async (req, res) => {
+const getReviewsByDestination = async (req, res) => {
   try {
     const { destinationId } = req.params;
 
@@ -32,7 +32,7 @@ export const getReviewsByDestination = async (req, res) => {
   }
 };
 
-export const createReview = async (req, res) => {
+const createReview = async (req, res) => {
   try {
     const review = await Review.create(req.body);
 
@@ -42,7 +42,7 @@ export const createReview = async (req, res) => {
   }
 };
 
-export const deleteReview = async (req, res) => {
+const deleteReview = async (req, res) => {
   try {
     const { reviewId } = req.params; // Grab the ID from the URL
 
@@ -54,7 +54,7 @@ export const deleteReview = async (req, res) => {
   }
 };
 
-export const likeReview = async (req, res) => {
+const likeReview = async (req, res) => {
   try {
     const { reviewId } = req.params;
 
@@ -69,4 +69,11 @@ export const likeReview = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Failed to like review" });
   }
+};
+
+module.exports = {
+  getReviewsByDestination,
+  createReview,
+  deleteReview,
+  likeReview,
 };

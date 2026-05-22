@@ -1,11 +1,10 @@
-import express from "express";
-
-import {
+const express = require("express");
+const {
   getReviewsByDestination,
   createReview,
   deleteReview,
   likeReview,
-} from "../controllers/reviewController.js";
+} = require("../controllers/reviewController");
 
 const router = express.Router();
 
@@ -13,4 +12,5 @@ router.get("/:destinationId", getReviewsByDestination);
 router.post("/:destinationId", createReview);
 router.delete("/:reviewId", deleteReview);
 router.patch("/:reviewId/like", likeReview);
-export default router;
+
+module.exports = router;
