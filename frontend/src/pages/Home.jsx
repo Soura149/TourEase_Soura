@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import Testimonials from "../pages/Testimonials";
 import { Link } from "react-router-dom";
 import {
@@ -14,9 +15,9 @@ import {
   DollarSign,
   Award,
   Star,
+  Sparkles,
 } from "lucide-react";
 import CountUp from "../components/CountUp";
-import ChatbotLauncher from "../components/chatbot/ChatbotLauncher";
 
 
 export default function Home() {
@@ -110,7 +111,7 @@ export default function Home() {
 
                     <div className="absolute bottom-6 left-6 bg-white/70 dark:bg-white/10 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/40 dark:border-white/20 shadow-xl">
                       <div className="flex items-center gap-2">
-                        <span className="text-teal-500">✦</span>
+                        <Sparkles className="text-teal-500 w-3 h-3" />
                         <p className="text-gray-900 dark:text-white text-[10px] font-bold uppercase tracking-wider">
                           Top Rated Experience
                         </p>
@@ -262,27 +263,48 @@ export default function Home() {
           your next adventure
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <CommunityCard
-            name="Emily Chen"
-            location="New York, USA"
-            quote="TourEase made planning my Europe trip so easy! The AI suggestions were spot-on, and I discovered hidden gems I never would have found."
-            trips="23 Trips"
-          />
+        <div className="community-marquee-wrapper">
+          <div className="community-marquee-track">
+            {/* Original set */}
+            <CommunityCard
+              name="Emily Chen"
+              location="New York, USA"
+              quote="TourEase made planning my Europe trip so easy! The AI suggestions were spot-on, and I discovered hidden gems I never would have found."
+              trips="23 Trips"
+            />
+            <CommunityCard
+              name="Marco Rossi"
+              location="Rome, Italy"
+              quote="As a frequent traveler, this app has become essential. The offline features saved me countless times, and the community is incredibly helpful."
+              trips="47 Trips"
+            />
+            <CommunityCard
+              name="Priya Patel"
+              location="Mumbai, India"
+              quote="The budget tracker helped me travel more while spending less. I love how it suggests alternatives and helps optimize my expenses!"
+              trips="15 Trips"
+            />
 
-          <CommunityCard
-            name="Marco Rossi"
-            location="Rome, Italy"
-            quote="As a frequent traveler, this app has become essential. The offline features saved me countless times, and the community is incredibly helpful."
-            trips="47 Trips"
-          />
-
-          <CommunityCard
-            name="Priya Patel"
-            location="Mumbai, India"
-            quote="The budget tracker helped me travel more while spending less. I love how it suggests alternatives and helps optimize my expenses!"
-            trips="15 Trips"
-          />
+            {/* Duplicate set for seamless loop */}
+            <CommunityCard
+              name="Emily Chen"
+              location="New York, USA"
+              quote="TourEase made planning my Europe trip so easy! The AI suggestions were spot-on, and I discovered hidden gems I never would have found."
+              trips="23 Trips"
+            />
+            <CommunityCard
+              name="Marco Rossi"
+              location="Rome, Italy"
+              quote="As a frequent traveler, this app has become essential. The offline features saved me countless times, and the community is incredibly helpful."
+              trips="47 Trips"
+            />
+            <CommunityCard
+              name="Priya Patel"
+              location="Mumbai, India"
+              quote="The budget tracker helped me travel more while spending less. I love how it suggests alternatives and helps optimize my expenses!"
+              trips="15 Trips"
+            />
+          </div>
         </div>
 
         <div className="relative h-80 rounded-2xl overflow-hidden">
@@ -359,9 +381,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-    {/* ================= CHATBOT ================= */}
-      <ChatbotLauncher />
-    </div>
+      </div>
+
   );
 }
 
@@ -430,3 +451,25 @@ function CommunityCard({ name, location, quote, trips }) {
     </div>
   );
 }
+
+FeatureCard.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+};
+
+StepCard.propTypes = {
+  number: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+};
+
+CommunityCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  quote: PropTypes.string.isRequired,
+  trips: PropTypes.string.isRequired,
+};

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Heart, Sun, Moon } from "lucide-react";
 import { useFavorites } from "../hooks/useFavorites";
 import { useTheme } from "../context/ThemeContext";
+import LanguageSelector from "./LanguageSelector";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -141,6 +142,7 @@ export default function Navigation() {
 
             {/* RIGHT ACTIONS */}
             <div className="flex items-center gap-3">
+
               {/* THEME TOGGLE */}
               <button
                 onClick={toggleTheme}
