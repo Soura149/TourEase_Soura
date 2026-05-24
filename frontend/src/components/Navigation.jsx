@@ -173,9 +173,9 @@ export default function Navigation() {
                 title="Toggle theme"
               >
                 {theme === "dark" ? (
-                  <Sun className="w-5 h-5 text-yellow-400 transition-transform duration-500 rotate-0" />
-                ) : (
                   <Moon className="w-5 h-5 text-gray-700 transition-transform duration-500" />
+                ) : (
+                  <Sun className="w-5 h-5 text-yellow-400 transition-transform duration-500 rotate-0" />
                 )}
               </button>
 
